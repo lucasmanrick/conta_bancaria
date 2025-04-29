@@ -3,6 +3,8 @@ package conta_bancaria;
 import java.util.Scanner;
 
 import conta_bancaria.model.Conta;
+import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -18,13 +20,23 @@ public class Menu {
 		
 		Conta c1 = new Conta(1,123,1,"Lucas", 500000);
 		
-		c1.visualizar();
 		
 		c1.sacar(60000);
+		c1.depositar(-1000);
+		
 		c1.visualizar();
 		
-		c1.depositar(-1000);
-		c1.visualizar();
+		// instanciando um objeto da classe ContaCorrente
+		ContaCorrente cc1 = new ContaCorrente(2,456,1,"Renata Negrini", 600000, 60000);
+		cc1.visualizar();
+		
+		
+		cc1.sacar(661000);
+		cc1.visualizar();
+		
+		
+		ContaPoupanca cp1 = new ContaPoupanca(3,456,2,"Lucas Manrick", 1000000,3);
+		cp1.visualizar();
 		
 		while (true) {
 			System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_BLACK_BACKGROUND );
