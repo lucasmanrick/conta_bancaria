@@ -148,16 +148,23 @@ public class Menu {
 
 	public static void keyPress() {
 
-		try {
-
-			System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
-			System.in.read();
-
-		} catch (IOException e) {
-
-			System.err.println("Ocorreu um erro ao tentar ler o teclado");
-
+		 try {
+		        System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
+		        
+		        // Lê apenas a tecla Enter e ignora outras teclas
+		        int input;
+		        while ((input = System.in.read()) != '\n') {
+		            // Ignora qualquer outra tecla diferente do Enter
+		            if (input == -1) {
+		                throw new IOException("Entrada encerrada inesperadamente");
+		            }
+		        }
+		        
+		    } catch (IOException e) {
+		        System.err.println("Erro de entrada/saída: " + e.getMessage());
+		    } catch (Exception e) {
+		        System.err.println("Ocorreu um erro ao processar a entrada: " + e.getMessage());
+		    }
 		}
-	}
 
 }
