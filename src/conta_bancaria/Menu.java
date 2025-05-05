@@ -1,9 +1,11 @@
 package conta_bancaria;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Scanner;
 
 import conta_bancaria.controller.ContaController;
+import conta_bancaria.model.Conta;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -102,19 +104,48 @@ public class Menu {
 				System.out.println("Consultar dados da Conta - por número\n\n");
 				
 				System.out.println("Digite o numero da conta que você deseja consultar os dados: ");
-				try {
 				contas.procurarPorNumero(read.nextInt());
-				} catch (ArithmeticException e) {
-					System.out.println("digite um numero valido!");
-				}
+	
 				keyPress();
 				break;
 			case 4:
 				System.out.println("Atualizar dados da Conta\n\n");
+				
+				System.out.println("Digite o numero da conta que você deseja consultar Contados: ");
+				numero = read.nextInt();
+				Optional<Conta> conta = contas.buscarNaCollection(numero); // busca pela conta com o numero inserido.
+				
+				if(conta.isPresent()) { // verifica se a conta realmente existe.
+					System.out.println("Digite o numero da agencia: ");
+					agencia = read.nextInt();
+					System.out.println("Digite o nome do titular: ");
+					read.skip("\\R");
+					titular = read.nextLine();
+					
+					tipo = conta.get().getTipo();
+					switch (tipo) {
+					case 1: // se for conta corrente pegar limite da conta 
+						System.out.println("Digite o limite da conta: ");
+						limite = read.nextFloat();
+						contas.cadastrar(new ContaCorrente(numero, agencia,tipo,titular, conta.get().getSaldo(), limite));
+						break;
+					case 2: // se for conta poupança pegar aniversario da conta.
+						System.out.println("Digite o dia aniversario da conta: ");
+						aniversario = read.nextInt();
+						contas.cadastrar(new ContaPoupanca(numero, agencia,tipo,titular, conta.get().getSaldo(), aniversario));
+					}
+					
+				}else 
+					System.out.printf("\nA conta numero %d não existe!", numero );
+				
 				keyPress();
 				break;
 			case 5:
 				System.out.println("Apagar a Conta\n\n");
+				
+				System.out.println("Digite o numero da conta que você deseja deletar os dados: ");
+				contas.deletar(read.nextInt());
+		
 				keyPress();
 				break;
 			case 6:
