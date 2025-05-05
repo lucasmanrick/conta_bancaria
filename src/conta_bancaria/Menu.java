@@ -18,9 +18,9 @@ public class Menu {
 
 		ContaController contas = new ContaController();
 
-		int opcao, numero, agencia, tipo, aniversario;
+		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
-		float saldo, limite;
+		float saldo, limite, valor;
 		
 		
 		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000.00f, 100.00f);
@@ -53,16 +53,11 @@ public class Menu {
 
 			opcao = read.nextInt();
 
-			if (opcao == 9) {
-				System.out.println("\nBanco do Brazil com Z - O seu Futuro começa aqui!");
-				sobre();
-				read.close();
-				System.exit(0);
-			}
-
 			switch (opcao) {
-			case 0: System.out.println("Saindo do sistema");
+			case 0: 
+				System.exit(0);
 				read.close();
+				System.out.println("Sistema encerrado, volte sempre!");
 			case 1:
 				System.out.println("Criar Conta\n\n");
 
@@ -150,14 +145,39 @@ public class Menu {
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
+				
+				System.out.println("Digite o numero da conta: ");
+				numero = read.nextInt();
+				System.out.println("Digite a quantia que deseja sacar: ");
+				valor = read.nextFloat();
+				contas.sacar(numero, valor);
 				keyPress();
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
+				
+				System.out.println("Digite o numero da conta: ");
+				numero = read.nextInt();
+				System.out.println("Digite a quantia que deseja Depositar: ");
+				valor = read.nextFloat();
+				contas.depositar(numero, valor);
 				keyPress();
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n");
+				System.out.println("Digite o numero da conta de origem: ");
+				numero = read.nextInt();
+				System.out.println("Digite o numero da conta de destino: ");
+				numeroDestino = read.nextInt();
+				System.out.println("Digite o valor para ser transferido: ");
+				valor = read.nextFloat();
+				
+				contas.transferir(numero, numeroDestino, valor);
+				keyPress();
+				break;
+			case 9:
+				System.out.println("\nBanco do Brazil com Z - O seu Futuro começa aqui!");
+				sobre();
 				keyPress();
 				break;
 			default:
