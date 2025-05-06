@@ -2,7 +2,9 @@ package conta_bancaria.controller;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import conta_bancaria.model.Conta;
 import conta_bancaria.repository.ContaRepository;
@@ -37,8 +39,23 @@ public class ContaController implements ContaRepository {
 								// existe em cada conta.
 
 		}
-
 	}
+	
+	@Override
+	public void listarPorTitular(String nomeTitular) {
+		List<Conta> listaNomes = listaContas.stream()
+				.filter(name -> name.getTitular().toUpperCase().contains(nomeTitular.toUpperCase()))
+				.collect(Collectors.toList());
+		
+		if(listaNomes.isEmpty()) {
+			System.out.println("Nenhuma conta foi encontrada com base no nome: " + nomeTitular);
+			return;
+		}
+		
+		listaNomes.forEach(e -> e.visualizar());
+		
+	}
+	
 
 	@Override
 	public void cadastrar(Conta conta) {
@@ -137,5 +154,6 @@ public class ContaController implements ContaRepository {
 		}
 		return Optional.empty(); // ao inves de retornar nullo retornamos um objeto Optional vazio.
 	}
+
 
 }

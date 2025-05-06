@@ -45,7 +45,8 @@ public class Menu {
 			System.out.println("****    |6.Sacar                          |    ****");
 			System.out.println("****    |7.Depositar                      |    ****");
 			System.out.println("****    |8.Transferir valores entre Contas|    ****");
-			System.out.println("****    |9.Sobre                          |    ****");
+			System.out.println("****    |9.Listar Contas por nome        |    ****");
+			System.out.println("****    |10.Sobre                          |    ****");
 			System.out.println("****    |> 0.Sair <                       |    ****");
 			System.out.println("****   	|_________________________________|    ****");
 			System.out.println("***************************************************");
@@ -176,6 +177,15 @@ public class Menu {
 				keyPress();
 				break;
 			case 9:
+				System.out.println("Consultar contas por titular");
+				System.out.println("Digite o nome do titular:");
+				read.skip("\\R");
+				titular = read.nextLine();
+				
+				contas.listarPorTitular(titular);
+				keyPress();
+				break;
+			case 10:
 				System.out.println("\nBanco do Brazil com Z - O seu Futuro começa aqui!");
 				sobre();
 				keyPress();
